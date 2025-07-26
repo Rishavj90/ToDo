@@ -1,0 +1,157 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: hsla(0, 0%, 10%, 0.974);
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    font-family: monospace;
+    position: absolute;
+    height: auto;
+    width: 95vw;
+}
+.textBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 0;
+    width:99vw;
+    
+}
+
+.inputBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:end;
+
+    position: fixed;
+    bottom: 20px;
+    width: 95vw;
+}
+#input{
+    position: relative;
+    outline: none;
+    border: none;
+    height: auto;
+    min-width: 30%;
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: hsl(0, 0%, 26%);
+    color: white;
+    font-size: 25px;
+    margin :10px;
+    resize: none;
+    overflow:hidden;
+     
+}
+#submit{
+    background-color: #c9d4e9;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    outline: none;
+    border: none;
+    transition: 0.2s ease;
+}
+#submit:hover{
+    border-radius: 8px;
+}
+
+.ToDoContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: auto;
+
+    position: absolute;
+    height: 79vh;
+    width:99vw;
+}
+
+.ToDoBox{
+    position: relative;
+    height: auto;
+    width: 60vw;
+    margin: 30px;
+}
+
+.heading{
+    font-size: 30px;
+    text-align: center;
+    padding: 10px;
+    font-family:monospace;
+    border-radius: 10px;  
+}
+
+.ContainsTasks, .ContainsDoneTasks{
+    background-color:#EDD83D;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    min-height: 50px;
+    height: auto;
+     
+}
+.Task{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+
+    height: auto;
+    text-align: left;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgb(244, 140, 80);
+    border-radius: 10px;
+    color: black;
+    overflow: hidden;
+}
+.myCheckbox{
+    min-height: 25px;
+    min-width: 25px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: black;
+}
+.myLabel{
+    margin-left: 10px;
+    height: auto;
+    width: 60vw;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    hyphens:auto;
+}
+
+.donetask{
+    display: flex;
+    flex-direction: row;
+    align-items:flex-start;
+
+    height: auto;
+    text-align: left;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgba(101, 43, 9, 0.888);
+    border-radius: 10px;
+    color: rgb(253, 247, 247);
+    overflow: hidden;
+}
+
+.doneLabel{
+    margin-left: 10px;
+    height: auto;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    hyphens:auto;
+    text-decoration: line-through;
+}
