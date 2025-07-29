@@ -81,13 +81,16 @@ document.querySelector(`.ContainsTasks`).addEventListener(`mouseover`, ()=>{
     let myOptions = document.querySelector(`.containsControls`);
     let task_arr = document.querySelectorAll(`.Task`);
     task_arr.forEach(function(i){
-    i.addEventListener(`mouseover`, ()=>{
-        i.append(myOptions);
-        myOptions.style.display = `flex`;
-    })
-    i.addEventListener(`mouseout`, ()=>{
-        document.querySelector(`.taskControlsContainer`).append(myOptions);
-        myOptions.style.display = `none`;
+        i.addEventListener(`mouseover`, ()=>{
+            i.append(myOptions);
+            myOptions.style.display = `flex`;
+            
+        })
     })
 })
+
+document.querySelector(`.ContainsTasks`).addEventListener(`mouseout`, ()=>{
+    let myOptions = document.querySelector(`.containsControls`);
+    document.querySelector(`.taskControlsContainer`).append(myOptions);
+    myOptions.style.display = `none`;
 })

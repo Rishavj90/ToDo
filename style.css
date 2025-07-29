@@ -86,9 +86,6 @@ body{
     border-radius: 10px;
     width: auto;
 }
-.taskControl:hover{
-    background-color: hsla(65, 100%, 50%, 0.435);;
-}
 
 .ToDoContainer{
     display: flex;
@@ -132,6 +129,7 @@ body{
     display: flex;
     flex-direction: row;
     align-items:flex-start;
+    
 
     height: auto;
     text-align: left;
@@ -142,6 +140,7 @@ body{
     color: black;
     overflow: hidden;
 }
+
 .myCheckbox{
     min-height: 25px;
     min-width: 25px;
