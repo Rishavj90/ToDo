@@ -16,35 +16,47 @@ document.addEventListener("keydown", event=>{
     if(event.key == "Enter")addTask();
 });
 
-
-
 function addTask(){
     let task = document.querySelector(`#input`).value.trim();
     if(!task)return;
 
     let body = document.querySelector(`.ContainsTasks`);
-    let checkBox = document.createElement(`input`);
-    let box = document.createElement(`div`);
-    let label = document.createElement(`div`);
-    let containsControls = document.createElement(`div`);
-    let btnClock = document.createElement(`button`);
-    btnClock.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#FFFFFF"><path d="M479.33-81.33q-74.33 0-139.83-28.17-65.5-28.17-114-76.67t-77-114Q120-365.67 120-440.49t28.5-140.17q28.5-65.34 77-114.17 48.5-48.84 114-77Q405-800 479.33-800q74.34 0 139.84 28.17 65.5 28.16 114.33 77 48.83 48.83 77 114.17 28.17 65.35 28.17 140.17T810.5-300.17q-28.17 65.5-77 114T619.17-109.5q-65.5 28.17-139.84 28.17Zm0-358Zm118 163.33L644-322.67 514.67-452v-188H448v214.67L597.33-276Zm-380-590.67L264-820 98-658l-46.67-46.67 166-162Zm524 0 166 162L860.67-658l-166-162 46.66-46.67ZM479.36-148q122.31 0 207.47-85.19Q772-318.39 772-440.7q0-122.3-85.19-207.47-85.2-85.16-207.51-85.16-122.3 0-207.47 85.19-85.16 85.2-85.16 207.5 0 122.31 85.19 207.47Q357.06-148 479.36-148Z"/></svg>`;
-    let btnBin = document.createElement(`button`);
-    btnBin.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="25px" viewBox="0 -960 960 960" width="25px" fill="#FFFFFF"><path d="M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438v-570ZM367-266h60v-399h-60v399Zm166 0h60v-399h-60v399ZM261-750v570-570Z"/></svg>`;
+    let BigTaskBox = document.createElement(`div`);
+    let ContainsTaskAndControls = document.createElement(`div`);
+    let containsSubTask = document.createElement(`div`);
 
-    containsControls.classList.add(`containsControls`);
-    btnClock.classList.add(`taskControl`);
-    btnBin.classList.add(`taskControl`);
-    box.classList.add("Task");
-    checkBox.type = "checkbox";
-    label.classList.add("myLabel");
-    checkBox.classList.add("myCheckbox");
+    let myTask = document.createElement(`div`);
+    let myCheckBox = document.createElement(`input`);
+    myCheckBox.type = `checkbox`;
+    let theTask = document.createElement(`div`);
+    theTask.innerText = task;
+    myTask.prepend(myCheckBox, theTask);
 
-    label.innerText = task;
-    containsControls.append(btnClock,btnBin);
-    box.append(checkBox,label,containsControls);
-    body.prepend(box);
+    let containsControls=  document.createElement(`div`);
+    let containsDueTime=  document.createElement(`div`);
+    let dueTimeIcon = document.createElement(`div`);
+    dueTimeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-520q66 0 113-47t47-113v-120H320v120q0 66 47 113t113 47ZM160-80v-80h80v-120q0-61 28.5-114.5T348-480q-51-32-79.5-85.5T240-680v-120h-80v-80h640v80h-80v120q0 61-28.5 114.5T612-480q51 32 79.5 85.5T720-280v120h80v80H160Z"/></svg>`;
+    let time = document.createElement(`div`);
+    time.innerText = `time`;
+
+    let otherBtns = document.createElement(`div`);
+    let ScheduleTime = document.createElement(`div`);
+    ScheduleTime.innerHTML= `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-800q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-360Zm112 168 56-56-128-128v-184h-80v216l152 152ZM224-866l56 56-170 170-56-56 170-170Zm512 0 170 170-56 56-170-170 56-56ZM480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720q-117 0-198.5 81.5T200-440q0 117 81.5 198.5T480-160Z"/></svg>`;
+    let subTaskIcon = document.createElement(`div`);
+    subTaskIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-120-57-57 144-143H200v-480h80v400h367L503-544l56-57 241 241-240 240Z"/></svg>`;
+    let binIcon = document.createElement(`div`);
+    binIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>`;
+
+    
+    otherBtns.append(subTaskIcon,ScheduleTime,binIcon);
+    containsDueTime.append(dueTimeIcon,time);
+    containsControls.append(containsDueTime,otherBtns);
+    ContainsTaskAndControls.append(myTask,containsControls);
+    BigTaskBox.append(ContainsTaskAndControls,containsSubTask)
+    body.prepend(BigTaskBox);
+
     document.querySelector(`#input`).value = "";
+    document.querySelector(`#input`).style.height = 'auto';
 }
 
 
