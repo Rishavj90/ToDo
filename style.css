@@ -63,30 +63,6 @@ body{
     border-radius: 8px;
 }
 
-.taskControlsContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.containsControls{
-    display: none;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-}
-
-.taskControl{
-    outline: none;
-    border: none;
-    background-color: #3c600e00;
-    border-radius: 10px;
-    width: auto;
-}
-
 .ToDoContainer{
     display: flex;
     flex-direction: row;
@@ -116,7 +92,6 @@ body{
 }
 
 .ContainsTasks, .ContainsDoneTasks{
-    background-color:#EDD83D;
     border-radius: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -124,21 +99,6 @@ body{
     min-height: 50px;
     height: auto;
      
-}
-.Task{
-    display: flex;
-    flex-direction: row;
-    align-items:flex-start;
-    
-
-    height: auto;
-    text-align: left;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: rgb(244, 140, 80);
-    border-radius: 10px;
-    color: black;
-    overflow: hidden;
 }
 
 .myCheckbox{
@@ -149,13 +109,48 @@ body{
     border-radius: 50%;
     background-color: black;
 }
-.myLabel{
+.theTask{
     margin-left: 10px;
     height: auto;
-    width: 100%;
+    width: 90%;
     overflow: hidden;
     overflow-wrap: break-word;
     hyphens:auto;
+    
+}
+
+.otherBtns, .containsDueTime, .containsControls, .myTask{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    width: auto;
+}
+.myTask{
+    width: 58vw;
+    margin-bottom: 8px;
+}
+.containsControls{
+    position: relative;
+    width: 100%;
+    display: none;
+}
+.otherBtns{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.ContainsTaskAndControls, .BigTaskBox{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.BigTaskBox{ 
+    padding: 10px;
+    border-bottom: rgb(234, 132, 132) 3px solid;
 }
 
 .donetask{
