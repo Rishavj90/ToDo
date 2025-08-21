@@ -128,7 +128,8 @@ body{
     width: auto;
 }
 .myTask{
-    width: 62vw;
+    height: auto;
+    width: 100%;
     margin-bottom: 8px;
 }
 .containsControls{
@@ -146,11 +147,11 @@ body{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: auto;
+    width: 100%;
 }
 
 .BigTaskBox{ 
-    height: auto;
-    width : auto;
     padding: 10px;
     border-bottom: rgb(234, 132, 132) 3px solid;
 }
