@@ -98,7 +98,7 @@ body{
     padding: 10px;
     min-height: 50px;
     height: auto;
-     
+    width: 70vw;
 }
 
 .myCheckbox{
@@ -128,7 +128,7 @@ body{
     width: auto;
 }
 .myTask{
-    width: 58vw;
+    width: 62vw;
     margin-bottom: 8px;
 }
 .containsControls{
@@ -149,6 +149,8 @@ body{
 }
 
 .BigTaskBox{ 
+    height: auto;
+    width : auto;
     padding: 10px;
     border-bottom: rgb(234, 132, 132) 3px solid;
 }
