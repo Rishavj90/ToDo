@@ -98,7 +98,7 @@ body{
     padding: 10px;
     min-height: 50px;
     height: auto;
-    width: 70vw;
+    width: 100%;
 }
 
 .myCheckbox{
