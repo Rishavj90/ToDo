@@ -44,10 +44,13 @@ function addTask(){
 
     let otherBtns = document.createElement(`div`);
     let ScheduleTime = document.createElement(`div`);
+    ScheduleTime.addEventListener(`click`, ()=>document.querySelector(`.TimeBox`).style.display = `block`);
     ScheduleTime.innerHTML= `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-800q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-360Zm112 168 56-56-128-128v-184h-80v216l152 152ZM224-866l56 56-170 170-56-56 170-170Zm512 0 170 170-56 56-170-170 56-56ZM480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720q-117 0-198.5 81.5T200-440q0 117 81.5 198.5T480-160Z"/></svg>`;
     let subTaskIcon = document.createElement(`div`);
+    subTaskIcon.id = `subTaskIcon`;
     subTaskIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-120-57-57 144-143H200v-480h80v400h367L503-544l56-57 241 241-240 240Z"/></svg>`;
     let binIcon = document.createElement(`div`);
+    binIcon.id = `binIcon`;
     binIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>`;
 
     otherBtns.append(subTaskIcon,ScheduleTime,binIcon);
@@ -73,6 +76,10 @@ function addTask(){
     document.querySelector(`#input`).style.height = 'auto';
 }
 
+//adding a due date
+function DueTime(){
+    
+}
 
 document.querySelector(`.ContainsTasks`).addEventListener("click", event=>{
     if(event.target.checked){
@@ -111,25 +118,3 @@ function backToTasks(a){
 
     doneBox.prepend(box);
 }
-
-document.querySelector(`.ContainsTasks`).addEventListener(`mouseover`,()=>{
-    let MyTasks = [...document.querySelectorAll(`.Task`)];
-    MyTasks.forEach(i=>{
-        i.addEventListener(`mouseover`,()=>{
-            let parts = [...i.children];
-            parts[2].style.display = `flex`;
-            console.log(parts[2]);
-        })
-        i.addEventListener(`mouseout`,()=>{
-            let parts = [...i.children];
-            parts[2].style.display = `none`;
-            console.log(parts[2]);
-        })
-    })
-})
-
-document.querySelector(`.ContainsTasks`).addEventListener(`mouseout`, ()=>{
-    let myOptions = document.querySelector(`.containsControls`);
-    document.querySelector(`.taskControlsContainer`).append(myOptions);
-    myOptions.style.display = `none`;
-})

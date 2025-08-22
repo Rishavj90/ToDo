@@ -180,3 +180,18 @@ body{
     hyphens:auto;
     text-decoration: line-through;
 }
+
+.TimeBox{
+    display: none;
+    height: auto;
+    width : 30vw;
+    padding: 20px;
+    background-color: rgb(0, 0, 0);
+    border: 3px white solid;
+    position: absolute;
+    top : 40vh;
+    left : 50vw;
+    z-index:1;
+    translate: -50% -50%;
+    border-radius: 10px;
+}
