@@ -7,9 +7,8 @@ body{
     font-size: 20px;
     color: rgb(255, 255, 255);
     font-family: monospace;
-    position: absolute;
-    height: auto;
-    width: 95vw;
+    height: 95vh;
+    width: 99vw;
 }
 .textBox{
     display: flex;
@@ -65,22 +64,22 @@ body{
 
 .ToDoContainer{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
     overflow: auto;
 
     position: absolute;
-    height: 79vh;
-    width:99vw;
+    height: 80vh;
+    width: 99vw;
 }
 
 .ToDoBox{
-    position: relative;
+    position: absolute;
+    top: 180px;
     height: auto;
     width: 60vw;
-    margin: 30px;
+    margin: 10px;
 }
 
 .heading{
@@ -88,10 +87,30 @@ body{
     text-align: center;
     padding: 10px;
     font-family:monospace;
-    border-radius: 10px;  
+    border-radius: 10px;
+    position: absolute; 
+    top: 20px; 
 }
 
-.ContainsTasks, .ContainsDoneTasks{
+.containsTags{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute; 
+    top: 70px; 
+    padding: 10px;
+    width: auto;
+    border-radius: 10px;
+}
+.Tags{
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(46, 43, 44);
+    border-radius: 10px;
+}
+
+.ContainsTasks{
     border-radius: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -202,7 +221,7 @@ body{
     border-radius: 10px;
 }
 .DrawerHeading{
-    margin: 10px;
+    margin-bottom: 5px;
 }
 .Container{
     display: flex;

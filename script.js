@@ -91,34 +91,10 @@ document.querySelector(`.ContainsTasks`).addEventListener("click", event=>{
     }
 });
 function doneTask(a){
-    let label = a.nextElementSibling;
-    let box = a.parentElement;
     
-    let doneBox = document.querySelector(`.ContainsDoneTasks`)
-   
-    label.classList.toggle(`myLabel`);
-    label.classList.toggle(`doneLabel`);
-    box.classList.toggle(`Task`);
-    box.classList.toggle(`donetask`);
-
-    doneBox.prepend(box);
+    
 }
 
-document.querySelector(`.ContainsDoneTasks`).addEventListener("click", event=>{
-    if(!event.target.checked){
-        backToTasks(event.target);
-    }
-});
 function backToTasks(a){
-    let label = a.nextElementSibling;
-    let box = a.parentElement;
     
-    let doneBox = document.querySelector(`.ContainsTasks`)
-   
-    label.classList.toggle(`myLabel`);
-    label.classList.toggle(`doneLabel`);
-    box.classList.toggle(`Task`);
-    box.classList.toggle(`donetask`);
-
-    doneBox.prepend(box);
 }
