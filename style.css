@@ -187,11 +187,81 @@ body{
     width : 30vw;
     padding: 20px;
     background-color: rgb(0, 0, 0);
-    border: 3px white solid;
     position: absolute;
     top : 40vh;
     left : 50vw;
     z-index:1;
     translate: -50% -50%;
     border-radius: 10px;
+}
+.TimeDrawer{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.DrawerHeading{
+    margin: 10px;
+}
+.Container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width : 100%;
+    overflow: hidden;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.dateInput{
+    min-width: 20%;
+    flex-grow: 1;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgb(34, 28, 28);
+    outline: none;
+    border: 1px pink solid;
+    color: pink;
+}
+._containsTime{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.WeekdayBtns{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: auto;
+    width: auto;
+}
+.Day{
+    background-color: rgb(34, 34, 34);
+    padding: 10px;
+    border-radius: 5px;
+    margin : 5px;
+}
+
+.containsDoneBtn{
+    width: 100%;
+    height: 50px;    
+    position: relative;
+}
+
+#CloseBtn{
+    position: absolute;
+    right: 0;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: pink;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: black;
 }

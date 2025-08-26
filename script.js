@@ -76,6 +76,10 @@ function addTask(){
     document.querySelector(`#input`).style.height = 'auto';
 }
 
+document.querySelector(`#CloseBtn`).addEventListener("click", ()=>{
+    document.querySelector(`.TimeBox`).style.display = `none`;
+});
+
 //adding a due date
 function DueTime(){
     
