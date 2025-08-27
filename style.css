@@ -260,11 +260,12 @@ body{
     height: auto;
     width: auto;
 }
-.Day{
+.Day, .Meridian{
     background-color: rgb(34, 34, 34);
     padding: 10px;
     border-radius: 5px;
     margin : 5px;
+    text-align: center;
 }
 
 .containsDoneBtn{

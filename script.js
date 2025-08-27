@@ -80,7 +80,24 @@ document.querySelector(`#CloseBtn`).addEventListener("click", ()=>{
     document.querySelector(`.TimeBox`).style.display = `none`;
 });
 
-//adding a due date
+//coloring options
+let TheDays = document.querySelectorAll(`.Day`);
+TheDays = Array.from(TheDays);
+let CheckedDay = Array(7).fill(false);
+for(let i = 0; i < 7; i++){
+    TheDays[i].addEventListener(`click`, ()=>{
+        if(CheckedDay[i] === false){
+            TheDays[i].style.backgroundColor = `pink`;
+            TheDays[i].style.color = `black`;
+            CheckedDay[i] = true;
+        }else{
+            TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
+            TheDays[i].style.color = `white`;
+            CheckedDay[i] = false;
+        }
+    })
+}
+
 function DueTime(){
     
 }
