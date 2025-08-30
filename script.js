@@ -44,7 +44,11 @@ function addTask(){
 
     let otherBtns = document.createElement(`div`);
     let ScheduleTime = document.createElement(`div`);
-    ScheduleTime.addEventListener(`click`, ()=>document.querySelector(`.TimeBox`).style.display = `block`);
+    ScheduleTime.addEventListener(`click`, ()=>{
+        document.querySelector(`.TimeBox`).style.display = `block`;
+        fillerTime();
+    });
+
     ScheduleTime.innerHTML= `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-800q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-360Zm112 168 56-56-128-128v-184h-80v216l152 152ZM224-866l56 56-170 170-56-56 170-170Zm512 0 170 170-56 56-170-170 56-56ZM480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720q-117 0-198.5 81.5T200-440q0 117 81.5 198.5T480-160Z"/></svg>`;
     let subTaskIcon = document.createElement(`div`);
     subTaskIcon.id = `subTaskIcon`;
@@ -80,7 +84,7 @@ document.querySelector(`#CloseBtn`).addEventListener("click", ()=>{
     document.querySelector(`.TimeBox`).style.display = `none`;
 });
 
-//coloring options
+//coloring options for days
 let TheDays = document.querySelectorAll(`.Day`);
 TheDays = Array.from(TheDays);
 let CheckedDay = Array(7).fill(false);
@@ -98,8 +102,60 @@ for(let i = 0; i < 7; i++){
     })
 }
 
-function DueTime(){
-    
+//coloring options for meridians
+let TheMeridian = document.querySelectorAll(`.Meridian`);
+TheMeridian = Array.from(TheMeridian);
+let CheckedMeridian = Array(2).fill(false);
+
+for(let i = 0; i < 2; i++){
+    TheMeridian[i].addEventListener(`click`, ()=>{
+        toggleMeridian(i);
+        for(let i = 0; i < 2; i++){
+            if(CheckedMeridian[i] == false){
+                TheMeridian[i].style.backgroundColor = `rgb(34, 34, 34)`;
+                TheMeridian[i].style.color = `white`;
+            }else{
+                TheMeridian[i].style.backgroundColor = `pink`;
+                TheMeridian[i].style.color = `black`;
+            }
+        }
+    })
+}
+
+
+function toggleMeridian(a){
+    if(a == 0){
+        CheckedMeridian[0] = true;
+        CheckedMeridian[1] = false;
+    }else{
+        CheckedMeridian[0] = false;
+        CheckedMeridian[1] = true;
+    }
+}
+
+function fillerTime(){
+    let mydate = new Date();
+    document.querySelector(`#date`).value = mydate.getDate();
+    document.querySelector(`#month`).value = mydate.getMonth()+1;
+    document.querySelector(`#year`).value = mydate.getFullYear();
+    document.querySelector(`#minute`).value = mydate.getMinutes();
+
+    let hrs = mydate.getHours();
+    if(hrs >= 12){
+        hrs /=12;
+        document.querySelector(`#pm`).style.backgroundColor = `pink`;
+        document.querySelector(`#pm`).style.color = `black`;
+        toggleMeridian(1);
+    }else{
+        document.querySelector(`#am`).style.backgroundColor = `pink`;
+        document.querySelector(`#am`).style.color = `black`;
+        toggleMeridian(0);
+    }
+    if(hrs == 0){
+        document.querySelector(`#hour`).value = 12;
+    }else{
+        document.querySelector(`#hour`).value = hrs;
+    }
 }
 
 document.querySelector(`.ContainsTasks`).addEventListener("click", event=>{
