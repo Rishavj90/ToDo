@@ -158,6 +158,37 @@ function fillerTime(){
     }
 }
 
+function giveTime(){
+    let mydate = document.querySelector(`#date`).value; 
+    let mymonth = document.querySelector(`#month`).value-1;
+    let myyear = document.querySelector(`#year`).value;
+    let myhour = document.querySelector(`#hour`).value
+    let mymin = document.querySelector(`#minute`).value;
+
+    mydate = parseInt(mydate);
+    mymonth = parseInt(mymonth);
+    myyear = parseInt(myyear);
+    myhour = parseInt(myhour);
+    mymin = parseInt(mymin);
+
+    if(myhour == 12 && CheckedMeridian[0] == true ){ //check if it is 12am
+        myhour = 0;
+    }
+    else if(myhour < 12 && CheckedMeridian[1] == true){ //it is pm
+        myhour+=12;
+    }
+
+    let newDate = new Date(myyear, mymonth, mydate, myhour, mymin);
+    if(isNaN(newDate)){
+        window.alert(`Invalid Date`);
+    }
+    return newDate;   
+}
+
+document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
+    console.log(giveTime());
+})
+
 document.querySelector(`.ContainsTasks`).addEventListener("click", event=>{
     if(event.target.checked){
         doneTask(event.target);

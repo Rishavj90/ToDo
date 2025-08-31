@@ -11,8 +11,8 @@
         <div class="TimeDrawer">
             <div class="DrawerHeading">date</div>
             <div class="Container">    
-                <input type="number" id="date" class = "dateInput" placeholder="dd">
-                <input type="number" id="month" class = "dateInput" placeholder="mm">
+                <input type="number" id="date" class = "dateInput" min="1" placeholder="dd">
+                <input type="number" id="month" class = "dateInput" min="1"  placeholder="mm">
                 <input type="number" id="year" class = "dateInput" placeholder="yyyy">
             </div>
         </div>
@@ -21,11 +21,11 @@
             <div class="Container">
                 <div class="_containsTime">
                     <label class="DrawerHeading" for="hour">hour</label>
-                    <input type="number" id="hour" class = "dateInput" placeholder="hh">
+                    <input type="number" id="hour" class="dateInput" min="1" max="12" placeholder="hh">
                 </div>
                 <div class="_containsTime">
                     <label class="DrawerHeading" for="minute">minute</label>
-                    <input type="number" id="minute" class = "dateInput"placeholder="mm">
+                    <input type="number" id="minute" class="dateInput" min="0" max="59" placeholder="mm">
                 </div>
                 <div class="_containsTime">
                     <div class="Meridian" id="am">am</div>
