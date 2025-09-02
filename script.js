@@ -11,6 +11,42 @@ function resizeBox(box){
     }
 }
 
+let tags = document.querySelectorAll(`.Tags`);
+let DiffTaskContainers = document.querySelectorAll(`.ContainsTasks`);
+tags = Array.from(tags);
+let checkedTag = Array(3).fill(false);
+checkedTag[0]= true;
+visibleTaskBox();
+for(let i = 0; i< 3; i++){
+    tags[i].addEventListener(`click`,()=>{
+        for(let j = 0; j< 3; j++){
+            if(j == i){
+                checkedTag[j] = true;
+            }else{
+                checkedTag[j] = false;
+            }
+            visibleTaskBox();
+        }
+    })
+}
+
+function visibleTaskBox(){
+    for(let j = 0; j< 3; j++){
+        if(checkedTag[j] == true){
+            tags[j].style.backgroundColor = `pink`;
+            tags[j].style.color = `black`;
+            DiffTaskContainers[j].style.display = `block`;
+        }else{
+            tags[j].style.backgroundColor = `rgb(46, 43, 44)`;
+            tags[j].style.color = `white`;
+            DiffTaskContainers[j].style.display = `none`;
+        }
+    }
+}
+
+
+
+
 document.querySelector(`#submit`).addEventListener("click", ()=>addTask());
 document.addEventListener("keydown", event=>{
     if(event.key == "Enter")addTask();
@@ -20,7 +56,7 @@ function addTask(){
     let task = document.querySelector(`#input`).value.trim();
     if(!task)return;
 
-    let body = document.querySelector(`.ContainsTasks`);
+    let body = document.querySelector(`#TodayTask`);
     let BigTaskBox = document.createElement(`div`);
     let ContainsTaskAndControls = document.createElement(`div`);
     let containsSubTask = document.createElement(`div`);
@@ -184,9 +220,25 @@ function giveTime(){
     }
     return newDate;   
 }
+function repeatingTime(){
+    let dateToday = new Date();
+    const myday = dateToday.getDay(); 
+    let days = 0;
+    let lessTime = 30;
+    for(let i = 0; i< 7; i++){
+        if(CheckedDay[i]==true){
+            if(myday <= i) days = i-myday;
+            else days = 7-myday+i;
+            lessTime = Math.min(lessTime,days);
+        }
+    }
+    let ansDate = new Date();
+    ansDate.setDate(dateToday.getDate()+lessTime);
+    return ansDate;
+}
 
 document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
-    console.log(giveTime());
+    console.log(repeatingTime());
 })
 
 document.querySelector(`.ContainsTasks`).addEventListener("click", event=>{
