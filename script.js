@@ -3,10 +3,8 @@ class Task{
     constructor(str){
         this.task = str,
         this.done = false;
-        this.timeSet = false,
-        this.date = new Date(),
-        this.dayArr = Array(7).fill(false),
-        this.timeLeft = null,
+        this.date = null,
+        this.dayArr = new Array(7).fill(false),
         this.TotalsubTask = null,
         this.DoneSubTask = null
     }
@@ -94,28 +92,23 @@ class Task{
         }
 
         let newDate = new Date(myyear, mymonth, mydate, myhour, mymin);
-        if(isNaN(newDate)){
-            window.alert(`Invalid Date`);
-        }
-        this.date = newDate;
-        return newDate;   
+        this.date = newDate;  
     }
 
     repeatingTime(){
-        let dateToday = this.date;
+        let dateToday = new Date(this.date);  
         const myday = dateToday.getDay(); 
         let days = 0;
-        let lessTime = 30;
-        this.dayArr.forEach(element => {
-            if(element == true){
+        let lessTime = 100;
+        for(let i = 0; i < this.dayArr.length; i++){
+            if(this.dayArr[i] == true){
                 if(myday <= i) days = i-myday;
                 else days = 7-myday+i;
                 lessTime = Math.min(lessTime,days);
             }
-        });
-        dateToday.setDate(dateToday.getDate()+lessTime);
-        this.date = dateToday;
-        return dateToday;
+        }
+        if(lessTime != 100)dateToday.setDate(dateToday.getDate()+lessTime);
+        this.date = dateToday;  
     }
 
 
@@ -127,6 +120,7 @@ function coverFuncToAddTask(){
     let a = new Task(task);
     AllMyTasks.push(a);
     a.addTask(task,AllMyTasks.indexOf(a));
+    console.log(AllMyTasks);
 }
 
 document.querySelector(`#submit`).addEventListener("click", ()=>coverFuncToAddTask());
@@ -218,8 +212,12 @@ function toggleMeridian(a){
     }
 }
 
-function fillerTime(){
+function fillerTime(taskObj, TheDays, CheckedDay){
     let mydate = new Date();
+    if(taskObj.date != null){
+        mydate = taskObj.date;
+    }
+    
     document.querySelector(`#date`).value = mydate.getDate();
     document.querySelector(`#month`).value = mydate.getMonth()+1;
     document.querySelector(`#year`).value = mydate.getFullYear();
@@ -227,7 +225,7 @@ function fillerTime(){
 
     let hrs = mydate.getHours();
     if(hrs >= 12){
-        hrs /=12;
+        hrs = Math.trunc(hrs /=12);
         document.querySelector(`#pm`).style.backgroundColor = `pink`;
         document.querySelector(`#pm`).style.color = `black`;
         toggleMeridian(1);
@@ -241,73 +239,104 @@ function fillerTime(){
     }else{
         document.querySelector(`#hour`).value = hrs;
     }
+
+    const n = TheDays.length;
+    for(let i = 0; i < n; i++){
+        if(CheckedDay[i] == true){
+            TheDays[i].style.backgroundColor = `pink`;
+            TheDays[i].style.color = `black`;
+        }else{
+            TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
+            TheDays[i].style.color = `white`;
+        }
+    }
 }
-let tags = document.querySelectorAll(`.Tags`);
-tags.forEach(ele=>{
-    
-})
-document.querySelector(`#TodayTask`).addEventListener(`click`, e =>{
-    if(e.target.id == `ScheduleTime`){
-        document.querySelector(`.TimeBox`).style.display = `block`;
-        fillerTime();
-        let thetask = e.target.parentElement.parentElement
-                   .parentElement.parentElement.parentElement;
 
-        let num = parseInt(thetask.childNodes[0].innerText);
+function colorAndStoreDayArr(i, TheDays, CheckedDay){
+    if(CheckedDay[i] === false){
+        TheDays[i].style.backgroundColor = `pink`;
+        TheDays[i].style.color = `black`;
+        CheckedDay[i] = true;
+        
+    }else{
+        TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
+        TheDays[i].style.color = `white`;
+        CheckedDay[i] = false;
+    }
+}
 
-        //coloring options for days and storing days
-        let TheDays = document.querySelectorAll(`.Day`);
-        TheDays = Array.from(TheDays);
-        CheckedDay = AllMyTasks[num].dayArr;
-        CheckedDay.forEach(element=>{
-            for(let i = 0; i < 7; i++){
-                if(element == true){
-                    TheDays[i].style.backgroundColor = `pink`;
-                    TheDays[i].style.color = `black`;
-                }else{
-                    TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
-                    TheDays[i].style.color = `white`;
-                }
-            }
+let containslisteners = [];
+
+let ContainTask = document.querySelectorAll(`.ContainsTasks`);
+ContainTask.forEach(ele=>{
+    ele.addEventListener(`click`, e =>{
+        if(e.target.id == `ScheduleTime`){
+            let thetask = e.target.parentElement.parentElement
+                    .parentElement.parentElement.parentElement;
+            let num = parseInt(thetask.childNodes[0].innerText);
+            let TheDays = document.querySelectorAll(`.Day`);
+            TheDays = Array.from(TheDays);
+            CheckedDay = [...AllMyTasks[num].dayArr];
+            document.querySelector(`.TimeBox`).style.display = `block`;
+            fillerTime(AllMyTasks[num], TheDays, CheckedDay);
             
-        })
+            
+            containslisteners.forEach(ele=>{
+                ele.node.removeEventListener(`click`, ele.func)
+            })
+            
 
-        for(let i = 0; i < 7; i++){
-            TheDays[i].addEventListener(`click`, ()=>{
-                if(CheckedDay[i] === false){
-                    TheDays[i].style.backgroundColor = `pink`;
-                    TheDays[i].style.color = `black`;
-                    CheckedDay[i] = true;
-                    
-                }else{
-                    TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
-                    TheDays[i].style.color = `white`;
-                    CheckedDay[i] = false;
+            const n = TheDays.length;
+            for(let i = 0; i < n; i++){
+                const wrapperFunc = (event)=>{
+                    colorAndStoreDayArr(i, TheDays, CheckedDay)
                 }
+
+                TheDays[i].addEventListener(`click`, wrapperFunc)
+                containslisteners.push({node : TheDays[i], func : wrapperFunc})
+            }
+
+            document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
+                document.querySelector(`.TimeBox`).style.display = `none`;
+                AllMyTasks[num].dayArr = CheckedDay;
+                AllMyTasks[num].giveTime();
+                console.log(AllMyTasks[num].date);
+                AllMyTasks[num].repeatingTime();
+                console.log(AllMyTasks[num].date);
+                let a = new Date();
+                let theDate = AllMyTasks[num].date;
+                if(parseInt(theDate.getDate()) != parseInt(a.getDate())){
+                    document.querySelector(`#ScheduleTaskBox`).prepend(thetask);
+                }
+                let theChild = thetask.childNodes[1].childNodes[1].childNodes[0].childNodes;
+                // childNodes[0] == the hourglass svg, [1] = `time`
+                updateTimer(theChild[1],num);
+                console.log(AllMyTasks);
             })
         }
+    })
 
-        document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
-            document.querySelector(`.TimeBox`).style.display = `none`;
-            AllMyTasks[num].dayArr = CheckedDay;
-            theDate =  AllMyTasks[num].repeatingTime();
-            let a = new Date();
-            if(parseInt(theDate.getDate()) != parseInt(a.getDate())){
-                document.querySelector(`#ScheduleTaskBox`).prepend(thetask);
-            }
-            let theChild = thetask.childNodes[1].childNodes[1].childNodes[0].childNodes;
-            // childNodes[0] == the hourglass svg, [1] = `time`
-            updateTimer(theChild[1],num);
-        })
-    }
 })
 
 
 function updateTimer(theChild, num){
     let startTimer = setInterval(() => {
         let now = new Date();
-        let theDue = AllMyTasks[num].repeatingTime();
-        theChild.innerText = `${theDue.getMinutes() - now.getMinutes()}`;
+        let diffInMilliseconds = AllMyTasks[num].date - now;
+        if(diffInMilliseconds < 0){
+            AllMyTasks[num].repeatingTime();
+            diffInMilliseconds = AllMyTasks[num].date - now;
+        }
+        const oneSecondInMs = 1000;
+        const oneMinuteInMs = oneSecondInMs * 60;
+        const oneHourInMs = oneMinuteInMs * 60;
+        const oneDayInMs = oneHourInMs * 24;
+
+        const diffInSeconds = Math.floor(diffInMilliseconds / oneSecondInMs) ;
+        const diffInMinutes = Math.floor((diffInMilliseconds / oneMinuteInMs)%60);
+        const diffInHours = Math.floor((diffInMilliseconds / oneHourInMs)%24);
+        const diffInDays = Math.floor(diffInMilliseconds / oneDayInMs);
+        theChild.innerText = `${diffInDays} days, ${diffInHours} hours, ${diffInMinutes} min`;
     }, 1000);
 }
 
@@ -324,3 +353,4 @@ function doneTask(a){
 function backToTasks(a){
     
 }
+
