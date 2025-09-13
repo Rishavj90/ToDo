@@ -45,6 +45,10 @@ body{
     border-radius: 20px;
     background-color: hsl(0, 0%, 26%);
     color: white;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
     font-size: 1.2rem;
     margin :10px;
     resize: none;
@@ -165,7 +169,9 @@ body{
     top: 0;
     right: 0;
 }
-
+#ScheduleTime{
+    cursor: pointer;
+}
 .ContainsTaskAndControls, .BigTaskBox{
     display: flex;
     flex-direction: column;
@@ -207,6 +213,7 @@ body{
 .TimeBox{
     display: none;
     height: auto;
+    min-width: 370px;
     width : 27vw;
     padding: 20px;
     background-color: rgb(0, 0, 0);

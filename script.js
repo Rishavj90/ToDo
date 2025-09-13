@@ -252,72 +252,55 @@ function fillerTime(taskObj, TheDays, CheckedDay){
     }
 }
 
-function colorAndStoreDayArr(i, TheDays, CheckedDay){
-    if(CheckedDay[i] === false){
-        TheDays[i].style.backgroundColor = `pink`;
-        TheDays[i].style.color = `black`;
-        CheckedDay[i] = true;
-        
-    }else{
-        TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
-        TheDays[i].style.color = `white`;
-        CheckedDay[i] = false;
-    }
-}
-
-let containslisteners = [];
-
+let num = 0;
+let thetask = null;
+let TheDays = document.querySelectorAll(`.Day`);
+let CheckedDay;
 let ContainTask = document.querySelectorAll(`.ContainsTasks`);
 ContainTask.forEach(ele=>{
     ele.addEventListener(`click`, e =>{
         if(e.target.id == `ScheduleTime`){
-            let thetask = e.target.parentElement.parentElement
-                    .parentElement.parentElement.parentElement;
-            let num = parseInt(thetask.childNodes[0].innerText);
-            let TheDays = document.querySelectorAll(`.Day`);
-            TheDays = Array.from(TheDays);
-            CheckedDay = [...AllMyTasks[num].dayArr];
+            thetask = e.target.closest(".BigTaskBox")
+            num = parseInt(thetask.childNodes[0].innerText);
             document.querySelector(`.TimeBox`).style.display = `block`;
+            CheckedDay = [...AllMyTasks[num].dayArr];
             fillerTime(AllMyTasks[num], TheDays, CheckedDay);
-            
-            
-            containslisteners.forEach(ele=>{
-                ele.node.removeEventListener(`click`, ele.func)
-            })
-            
-
-            const n = TheDays.length;
-            for(let i = 0; i < n; i++){
-                const wrapperFunc = (event)=>{
-                    colorAndStoreDayArr(i, TheDays, CheckedDay)
-                }
-
-                TheDays[i].addEventListener(`click`, wrapperFunc)
-                containslisteners.push({node : TheDays[i], func : wrapperFunc})
-            }
-
-            document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
-                document.querySelector(`.TimeBox`).style.display = `none`;
-                AllMyTasks[num].dayArr = CheckedDay;
-                AllMyTasks[num].giveTime();
-                console.log(AllMyTasks[num].date);
-                AllMyTasks[num].repeatingTime();
-                console.log(AllMyTasks[num].date);
-                let a = new Date();
-                let theDate = AllMyTasks[num].date;
-                if(parseInt(theDate.getDate()) != parseInt(a.getDate())){
-                    document.querySelector(`#ScheduleTaskBox`).prepend(thetask);
-                }
-                let theChild = thetask.childNodes[1].childNodes[1].childNodes[0].childNodes;
-                // childNodes[0] == the hourglass svg, [1] = `time`
-                updateTimer(theChild[1],num);
-                console.log(AllMyTasks);
-            })
         }
     })
 
 })
+const n = TheDays.length;
+for(let i = 0; i < n; i++){
+    const wrapperFunc = ()=>{
+        if(CheckedDay[i] === false){
+            TheDays[i].style.backgroundColor = `pink`;
+            TheDays[i].style.color = `black`;
+            CheckedDay[i] = true;
+            
+        }else{
+            TheDays[i].style.backgroundColor = `rgb(34, 34, 34)`;
+            TheDays[i].style.color = `white`;
+            CheckedDay[i] = false;
+        }
+    }
+    TheDays[i].addEventListener(`click`, wrapperFunc)
+}
 
+document.querySelector(`#CloseBtn`).addEventListener("click",()=>{
+    document.querySelector(`.TimeBox`).style.display = `none`;
+    AllMyTasks[num].dayArr = CheckedDay;
+    AllMyTasks[num].giveTime();
+    AllMyTasks[num].repeatingTime();
+    
+    let a = new Date();
+    let theDate = AllMyTasks[num].date;
+    if(parseInt(theDate.getDate()) != parseInt(a.getDate())){
+        document.querySelector(`#ScheduleTaskBox`).prepend(thetask);
+    }
+    let theChild = thetask.childNodes[1].childNodes[1].childNodes[0].childNodes;
+    // childNodes[0] == the hourglass svg, [1] = `time`
+    updateTimer(theChild[1],num);
+})
 
 function updateTimer(theChild, num){
     let startTimer = setInterval(() => {
@@ -332,11 +315,11 @@ function updateTimer(theChild, num){
         const oneHourInMs = oneMinuteInMs * 60;
         const oneDayInMs = oneHourInMs * 24;
 
-        const diffInSeconds = Math.floor(diffInMilliseconds / oneSecondInMs) ;
+        const diffInSeconds = Math.floor((diffInMilliseconds / oneSecondInMs)%60) ;
         const diffInMinutes = Math.floor((diffInMilliseconds / oneMinuteInMs)%60);
         const diffInHours = Math.floor((diffInMilliseconds / oneHourInMs)%24);
         const diffInDays = Math.floor(diffInMilliseconds / oneDayInMs);
-        theChild.innerText = `${diffInDays} days, ${diffInHours} hours, ${diffInMinutes} min`;
+        theChild.innerText = `${diffInDays} days, ${diffInHours} hours, ${diffInMinutes} mins, ${diffInSeconds} sec`;
     }, 1000);
 }
 
