@@ -204,9 +204,13 @@ for(let i = 0; i < 2; i++){
 
 function toggleMeridian(a){
     if(a == 0){
+        document.querySelector(`#am`).style.backgroundColor = `pink`;
+        document.querySelector(`#am`).style.color = `black`;
         CheckedMeridian[0] = true;
         CheckedMeridian[1] = false;
     }else{
+        document.querySelector(`#pm`).style.backgroundColor = `pink`;
+        document.querySelector(`#pm`).style.color = `black`;
         CheckedMeridian[0] = false;
         CheckedMeridian[1] = true;
     }
@@ -225,13 +229,10 @@ function fillerTime(taskObj, TheDays, CheckedDay){
 
     let hrs = mydate.getHours();
     if(hrs >= 12){
-        hrs = Math.trunc(hrs /=12);
-        document.querySelector(`#pm`).style.backgroundColor = `pink`;
-        document.querySelector(`#pm`).style.color = `black`;
+        hrs = hrs-12;
+        if(hrs == 0)hrs=12;
         toggleMeridian(1);
     }else{
-        document.querySelector(`#am`).style.backgroundColor = `pink`;
-        document.querySelector(`#am`).style.color = `black`;
         toggleMeridian(0);
     }
     if(hrs == 0){
@@ -330,10 +331,20 @@ document.querySelector(`#TodayTask`).addEventListener(`click`, e =>{
 })
 function doneTask(a){
     let task = a.parentElement.parentElement.parentElement
+    task.classList.toggle("donetask");
+    task.children[1].children[0].children[1].classList.toggle(`doneLabel`)
     document.querySelector(`#DoneTask`).prepend(task);
 }
+document.querySelector(`#DoneTask`).addEventListener(`click`, e =>{
+    if(e.target.type == `checkbox` && !e.target.checked){
+        backToTasks(e.target);
+    }
+})
 
 function backToTasks(a){
-    
+    let task = a.parentElement.parentElement.parentElement
+    task.classList.toggle("donetask");
+    task.children[1].children[0].children[1].classList.toggle(`doneLabel`)
+    document.querySelector(`#TodayTask`).prepend(task);
 }
 
