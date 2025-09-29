@@ -235,11 +235,8 @@ function fillerTime(taskObj, TheDays, CheckedDay){
     }else{
         toggleMeridian(0);
     }
-    if(hrs == 0){
-        document.querySelector(`#hour`).value = 12;
-    }else{
-        document.querySelector(`#hour`).value = hrs;
-    }
+    
+    document.querySelector(`#hour`).value = hrs;
 
     const n = TheDays.length;
     for(let i = 0; i < n; i++){
@@ -265,6 +262,11 @@ ContainTask.forEach(ele=>{
             num = parseInt(thetask.childNodes[0].innerText);
             document.querySelector(`.TimeBox`).style.display = `block`;
             CheckedDay = [...AllMyTasks[num].dayArr];
+            CheckedMeridian = Array(2).fill(false);
+            TheMeridian.forEach(i =>{
+                i.style.backgroundColor = `rgb(34, 34, 34)`;
+                i.style.color = `white`;
+            })
             fillerTime(AllMyTasks[num], TheDays, CheckedDay);
         }
     })
