@@ -1,4 +1,7 @@
-const AllMyTasks = Array();
+let AllMyTasks = {};
+let taskCount = 0; 
+let isSubTask = false;
+
 class Task{
     constructor(str){
         this.task = str,
@@ -6,7 +9,8 @@ class Task{
         this.date = null,
         this.dayArr = new Array(7).fill(false),
         this.TotalsubTask = null,
-        this.DoneSubTask = null
+        this.DoneSubTask = null,
+        this.parentTask = null
     }
 
     addTask(task,ind){
@@ -18,6 +22,7 @@ class Task{
         let BigTaskBox = document.createElement(`div`);
         let ContainsTaskAndControls = document.createElement(`div`);
         let containsSubTask = document.createElement(`div`);
+        containsSubTask.classList.add(`containsSubTask`);
 
         let myTask = document.createElement(`div`);
         let myCheckBox = document.createElement(`input`);
@@ -38,14 +43,11 @@ class Task{
 
         let otherBtns = document.createElement(`div`);
         let ScheduleTime = document.createElement(`div`);
-        
         ScheduleTime.innerHTML= `<svg id="ScheduleTime" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440q0-75 28.5-140.5t77-114q48.5-48.5 114-77T480-800q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Zm0-360Zm112 168 56-56-128-128v-184h-80v216l152 152ZM224-866l56 56-170 170-56-56 170-170Zm512 0 170 170-56 56-170-170 56-56ZM480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720q-117 0-198.5 81.5T200-440q0 117 81.5 198.5T480-160Z"/></svg>`;
         let subTaskIcon = document.createElement(`div`);
-        subTaskIcon.id = `subTaskIcon`;
-        subTaskIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-120-57-57 144-143H200v-480h80v400h367L503-544l56-57 241 241-240 240Z"/></svg>`;
+        subTaskIcon.innerHTML = `<svg id="subTaskIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="m560-120-57-57 144-143H200v-480h80v400h367L503-544l56-57 241 241-240 240Z"/></svg>`;
         let binIcon = document.createElement(`div`);
-        binIcon.id = `binIcon`;
-        binIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>`;
+        binIcon.innerHTML = `<svg id="binIcon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>`;
 
         otherBtns.append(subTaskIcon,ScheduleTime,binIcon);
         otherBtns.classList.add(`otherBtns`);
@@ -70,8 +72,31 @@ class Task{
         document.querySelector(`#input`).style.height = 'auto';
     }
 
+    addLabelOnTextBox(thetask){
+        this.parentTask = document.createElement(`div`);
+        let num = parseInt(thetask.childNodes[0].innerText);
+        this.parentTask.innerText = (AllMyTasks[num].task.length > 20) ? (AllMyTasks[num].task.slice(0,20) + "...") : AllMyTasks[num].task;
+        this.parentTask.id = `parentTask`;
+        document.querySelector(`.inputBox`).prepend(this.parentTask);
+    }
+
+    addSubTask(thetask){
+        let str = document.querySelector(`#input`).value.trim();
+        let theSubTask = document.createElement(`div`);
+        theSubTask.classList.add(`theSubTask`);
+        let strSubTask = document.createElement(`div`);
+        strSubTask.classList.add(`theTask`)
+        strSubTask.innerText = str;
+        let myCheckBox = document.createElement(`input`);
+        myCheckBox.type = `checkbox`;
+        myCheckBox.classList.add(`myCheckbox`);
+        theSubTask.append(myCheckBox, strSubTask);
+        thetask.childNodes[2].prepend(theSubTask);
+        this.parentTask.remove()
+    }
+
+
     giveTime(){
-        this.timeSet = true;
         let mydate = document.querySelector(`#date`).value; 
         let mymonth = document.querySelector(`#month`).value-1;
         let myyear = document.querySelector(`#year`).value;
@@ -118,12 +143,13 @@ function coverFuncToAddTask(){
     let task = document.querySelector(`#input`).value.trim();
     if(!task)return;
     let a = new Task(task);
-    AllMyTasks.push(a);
-    a.addTask(task,AllMyTasks.indexOf(a));
-    console.log(AllMyTasks);
+    AllMyTasks[taskCount] = a;
+    a.addTask(task,taskCount);
+    taskCount++;
+    
 }
 
-document.querySelector(`#submit`).addEventListener("click", ()=>coverFuncToAddTask());
+document.querySelector(`#submit`).addEventListener(`click`, coverFuncToAddTask)
 document.addEventListener("keydown", event=>{
     if(event.key == "Enter"){
         coverFuncToAddTask();
@@ -257,9 +283,10 @@ let CheckedDay;
 let ContainTask = document.querySelectorAll(`.ContainsTasks`);
 ContainTask.forEach(ele=>{
     ele.addEventListener(`click`, e =>{
+        thetask = e.target.closest(".BigTaskBox")
+        num = parseInt(thetask.childNodes[0].innerText);
+
         if(e.target.id == `ScheduleTime`){
-            thetask = e.target.closest(".BigTaskBox")
-            num = parseInt(thetask.childNodes[0].innerText);
             document.querySelector(`.TimeBox`).style.display = `block`;
             CheckedDay = [...AllMyTasks[num].dayArr];
             CheckedMeridian = Array(2).fill(false);
@@ -269,6 +296,27 @@ ContainTask.forEach(ele=>{
             })
             fillerTime(AllMyTasks[num], TheDays, CheckedDay);
         }
+
+        if(e.target.id == `binIcon`){
+            thetask.remove();
+            delete AllMyTasks[num];
+        }
+
+        if(e.target.id == `subTaskIcon`){
+            AllMyTasks[num].addLabelOnTextBox(thetask)
+            function wrapper(){
+                AllMyTasks[num].addSubTask(thetask)
+            }
+            
+            if(isSubTask){
+                document.querySelector(`#submit`).removeEventListener(`click`, coverFuncToAddTask);
+                document.querySelector(`#submit`).addEventListener(`click`, wrapper)
+                isSubTask = !isSubTask;
+        
+            }
+            
+        }
+
     })
 
 })
@@ -313,6 +361,9 @@ function updateTimer(theChild, num){
             AllMyTasks[num].repeatingTime();
             diffInMilliseconds = AllMyTasks[num].date - now;
         }
+        if(AllMyTasks[num].done){
+            clearInterval(startTimer);
+        }
         const oneSecondInMs = 1000;
         const oneMinuteInMs = oneSecondInMs * 60;
         const oneHourInMs = oneMinuteInMs * 60;
@@ -332,7 +383,9 @@ document.querySelector(`#TodayTask`).addEventListener(`click`, e =>{
     }
 })
 function doneTask(a){
-    let task = a.parentElement.parentElement.parentElement
+    let task = a.closest(".BigTaskBox");
+    let num = parseInt(thetask.childNodes[0].innerText);
+    AllMyTasks[num].done = true;
     task.classList.toggle("donetask");
     task.children[1].children[0].children[1].classList.toggle(`doneLabel`)
     document.querySelector(`#DoneTask`).prepend(task);
@@ -344,9 +397,12 @@ document.querySelector(`#DoneTask`).addEventListener(`click`, e =>{
 })
 
 function backToTasks(a){
-    let task = a.parentElement.parentElement.parentElement
+    let task = a.closest(".BigTaskBox");
+    let num = parseInt(thetask.childNodes[0].innerText);
+    AllMyTasks[num].done = false;
     task.classList.toggle("donetask");
     task.children[1].children[0].children[1].classList.toggle(`doneLabel`)
     document.querySelector(`#TodayTask`).prepend(task);
 }
+
 
